@@ -1,0 +1,55 @@
+LINUX
+1.- Accedemos al directorio /home/optimus01/Documentos/kafka_2.13-3.9.0/config
+  - Si estamos en windows cambiamos la ruta de los logs -> dataDir=/tmp/zookeeper
+  - Si estamos en linux la podemos mantener
+
+2.- Iniciamos el servidor zookeeper
+   - Accedemos a la ruta -> /home/optimus01/Documentos/kafka_2.13-3.9.0/bin
+   - # ejecutar el zookeper desde el directorio raiz
+   - $ bin/zookeeper-server-start.sh config/zookeeper.properties
+   
+3.- Iniciamos Kakfa despues de zookeeper	
+   - # ejecutar el kafka desde el directorio raiz
+   - bin/kafka-server-start.sh config/server.properties
+   
+   Podemos crear brokers ducplicanco los archivos "server-1.properties", "server-2.properties" etc ... y debemos cambiar los siguientes valores:
+   - broker.id=1
+   - listeners=PLAINTEXT://:9093
+   - log.dirs=/tmp/kafka-logs-1
+   
+   Luego iniciamos cada uno de los broker desde la terminal
+   - bin/kafka-server-start.sh config/server-1.properties
+   - bin/kafka-server-start.sh config/server-2.properties
+   
+   IDE para administracion de kafka
+   - wget -qO - https://packages.confluent.io/deb/7.0/archive.key | sudo apt-key add -
+   - echo "deb [arch=amd64] https://packages.confluent.io/deb/7.0 stable main" | sudo tee /etc/apt/sources.list.d/confluent.list
+   - sudo apt-get update
+   - sudo apt-get install confluent-platform
+   - confluent local services control-center start
+   - http://localhost:9021
+   
+   
+4.- creación de topicos
+
+  * Crear un topic de Kafka con factor de replicación de 3 y dos particiones:
+  - ./bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 2 --topic testtopic
+
+  * Visualizar detalles de un topic de Kafka:
+  - ./bin/kafka-topics.sh --describe --bootstrap-server localhost:9092 --topic testtopic
+
+  * Listar los topics de Kafka:
+  - ./bin/kafka-topics.sh --list --bootstrap-server localhost:9092
+  
+  Ejecutar consumidor de consola de Kafka sobre un topic:
+  - ./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic testtopic --group grupo1
+
+  * Ejecutar productor de consola de Kafka sobre un topic:
+  - ./bin/kafka-console-producer.sh --broker-list localhost:9092,localhost:9093,localhost:9094 --topic testtopic
+
+  * Describir los grupos de consumidores en Kafka:
+  - ./bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --group grupo1 --describe
+
+  * Ejecutar Kafka Mirror Maker sobre un topic con la configuración del consumidor y productor:
+  ./bin/kafka-mirror-maker.sh --consumer.config config/consumer.properties --producer.config config/producer.properties --whitelist testtopic 
+
