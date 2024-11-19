@@ -28,7 +28,8 @@ LINUX
    - sudo apt-get install confluent-platform
    - confluent local services control-center start
    - http://localhost:9021
-   
+   - sudo apt-get remove --purge confluent-platform
+   - sudo apt-get install confluent-platform
    
 4.- creación de topicos
 
