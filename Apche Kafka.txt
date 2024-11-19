@@ -33,23 +33,23 @@ LINUX
 4.- creación de topicos
 
   * Crear un topic de Kafka con factor de replicación de 3 y dos particiones:
-  - ./bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 2 --topic testtopic
+  - bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 2 --topic testtopic
 
   * Visualizar detalles de un topic de Kafka:
-  - ./bin/kafka-topics.sh --describe --bootstrap-server localhost:9092 --topic testtopic
+  - bin/kafka-topics.sh --describe --bootstrap-server localhost:9092 --topic testtopic
 
   * Listar los topics de Kafka:
-  - ./bin/kafka-topics.sh --list --bootstrap-server localhost:9092
+  - bin/kafka-topics.sh --list --bootstrap-server localhost:9092
   
-  Ejecutar consumidor de consola de Kafka sobre un topic:
-  - ./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic testtopic --group grupo1
+  Ejecutar consumidor de consola de Kafka sobre un topic: (Se pone a escuchar al testtopic)
+  - bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic testtopic --group grupo1
 
-  * Ejecutar productor de consola de Kafka sobre un topic:
-  - ./bin/kafka-console-producer.sh --broker-list localhost:9092,localhost:9093,localhost:9094 --topic testtopic
+  * Ejecutar productor de consola de Kafka sobre un topic: (Habilita el envio de mensajes)
+  - bin/kafka-console-producer.sh --broker-list localhost:9092,localhost:9093,localhost:9094 --topic testtopic
 
   * Describir los grupos de consumidores en Kafka:
-  - ./bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --group grupo1 --describe
+  - bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --group grupo1 --describe
 
   * Ejecutar Kafka Mirror Maker sobre un topic con la configuración del consumidor y productor:
-  ./bin/kafka-mirror-maker.sh --consumer.config config/consumer.properties --producer.config config/producer.properties --whitelist testtopic 
+  - bin/kafka-mirror-maker.sh --consumer.config config/consumer.properties --producer.config config/producer.properties --whitelist testtopic 
 
